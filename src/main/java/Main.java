@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -7,54 +11,52 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static spark.Spark.*;
+
+import com.sun.net.httpserver.HttpServer;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import spark.template.freemarker.FreeMarkerEngine;
 import spark.ModelAndView;
 import static spark.Spark.get;
 
 import com.heroku.sdk.jdbc.DatabaseUrl;
 
-public class Main {
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-  public static void main(String[] args) {
+public class Main extends HttpServlet{
 
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
+  private static String TABLE_CREATION = "";
 
-    get("/hello", (req, res) -> "Hello World");
+  private static Connection getConnection() throws URISyntaxException, SQLException
+  {
+    URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
-    get("/", (request, response) -> {
-            Map<String, Object> attributes = new HashMap<>();
-            attributes.put("message", "Hello World!");
+    String username = dbUri.getUserInfo().split(":")[0];
+    String password = dbUri.getUserInfo().split(":")[1];
+    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 
-            return new ModelAndView(attributes, "index.ftl");
-        }, new FreeMarkerEngine());
+    return DriverManager.getConnection(dbUrl, username, password);
+  }
 
-    get("/db", (req, res) -> {
-      Connection connection = null;
-      Map<String, Object> attributes = new HashMap<>();
-      try {
-        connection = DatabaseUrl.extract().getConnection();
+  public static void main(String[] args) throws Exception {
+    Server server = new Server(Integer.valueOf(System.getenv("PORT")));
+    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+    context.setContextPath("/");
+    server.setHandler(context);
+    context.addServlet(new ServletHolder(new Main()), "/*");
+    server.start();
+    server.join();
+  }
 
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-        stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-        ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
-        ArrayList<String> output = new ArrayList<String>();
-        while (rs.next()) {
-          output.add( "Read from DB: " + rs.getTimestamp("tick"));
-        }
-
-        attributes.put("results", output);
-        return new ModelAndView(attributes, "db.ftl");
-      } catch (Exception e) {
-        attributes.put("message", "There was an error: " + e);
-        return new ModelAndView(attributes, "error.ftl");
-      } finally {
-        if (connection != null) try{connection.close();} catch(SQLException e){}
-      }
-    }, new FreeMarkerEngine());
-
+  public static String getStackTrace(Throwable aThrowable) {
+    final Writer result = new StringWriter();
+    final PrintWriter printWriter = new PrintWriter(result);
+    aThrowable.printStackTrace(printWriter);
+    return result.toString();
   }
 
 }
