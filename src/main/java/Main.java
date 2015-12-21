@@ -1,49 +1,83 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.sql.*;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Map;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static spark.Spark.*;
-
-import com.sun.net.httpserver.HttpServer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import spark.template.freemarker.FreeMarkerEngine;
-import spark.ModelAndView;
-import static spark.Spark.get;
-
-import com.heroku.sdk.jdbc.DatabaseUrl;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.*;
 
 public class Main extends HttpServlet{
 
-    private static String TABLE_CREATION = "CREATE TABLE USER (user_id SERIAL, name varchar(32), " +
-          "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32)";
+    private static String TABLE_CREATION = "CREATE TABLE IF NOT EXISTS profile (user_id SERIAL, name varchar(32), " +
+            "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32));";
+    private static String TABLE_CREATION_2 = "CREATE TABLE Connections (requester_id int, target_id int, status varchar(32));";
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       Connection connection = null;
       try {
-        connection = getConnection();
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate(TABLE_CREATION);
+          connection = getConnection();
+          Statement stmt = connection.createStatement();
+          stmt.executeUpdate(TABLE_CREATION);
+          stmt.executeUpdate(TABLE_CREATION_2);
       }
       catch (Exception e) {
-        resp.setStatus(500);
-        resp.getWriter().print("Table creation error: " + e.getMessage());
+          resp.setStatus(500);
+          resp.getWriter().print("Table creation error: " + e.getMessage());
       }
+
+      StringBuffer jb = new StringBuffer();
+      String line;
+      try {
+          BufferedReader reader = req.getReader();
+          while ((line = reader.readLine()) != null)
+              jb.append(line);
+      }
+      catch (IOException e) {
+          resp.setStatus(400);
+          resp.getWriter().print("Couldn't read in request body: " + getStackTrace(e));
+      }
+
+	  try {
+		  JSONObject jsonObject = new JSONObject(jb.toString());
+		  if (req.getRequestURI().endsWith("/createAccount")) {
+			  String name = jsonObject.getString("name");
+			  String about_me = jsonObject.getString("about_me");
+			  String village = jsonObject.getString("village");
+			  String zip_code = jsonObject.getString("zip_code");
+			  String phone_number = jsonObject.getString("phone_number");
+			  String email = jsonObject.getString("email");
+			  String update_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
+			  try {
+				  PreparedStatement stmt = connection.prepareStatement(update_sql);
+				  stmt.setString(1, name);
+				  stmt.setString(2, about_me);
+				  stmt.setString(3, village);
+				  stmt.setString(4, zip_code);
+				  stmt.setString(5, phone_number);
+				  stmt.setString(6, email);
+				  stmt.executeUpdate();
+				  stmt.close();
+			  }
+			  catch (SQLException e) {
+			  }
+		  }
+		  else {
+			  resp.setStatus(404);
+		  }
+	  }
+	  catch (JSONException e1) {
+		  resp.setStatus(400);
+		  resp.getWriter().print("Error parsing request JSON: " + getStackTrace(e1));
+	  }
+
   }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {
