@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Main extends HttpServlet{
 
     private static String TABLE_CREATION = "CREATE TABLE USER (user_id SERIAL, name varchar(32), " +
-          "about_me varchar(1024), num_wrong int, run_type varchar(32), time_occurred bigint)";
+          "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32)";
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
