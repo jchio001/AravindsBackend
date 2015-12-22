@@ -17,7 +17,7 @@ public class Main extends HttpServlet{
 
     private static String TABLE_CREATION = "CREATE TABLE IF NOT EXISTS profile (user_id SERIAL, name varchar(32), " +
             "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32));";
-    private static String TABLE_CREATION_2 = "CREATE TABLE Connections (requester_id int, target_id int, status varchar(32));";
+    private static String TABLE_CREATION_2 = "CREATE TABLE IF NOT EXISTS Connections (requester_id int, target_id int, status varchar(32));";
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -78,6 +78,15 @@ public class Main extends HttpServlet{
 		  resp.getWriter().print("Error parsing request JSON: " + getStackTrace(e1));
 	  }
 
+	  finally {
+		  try {
+			  connection.close();
+		  }
+		  catch (SQLException e) {
+			  resp.getWriter().print("Failed to close connection: " + getStackTrace(e));
+		  }
+	  }
+
   }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {
@@ -88,7 +97,7 @@ public class Main extends HttpServlet{
       String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 
       return DriverManager.getConnection(dbUrl, username, password);
-    }
+}
 
     public static void main(String[] args) throws Exception {
       Server server = new Server(Integer.valueOf(System.getenv("PORT")));
