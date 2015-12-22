@@ -47,7 +47,7 @@ public class Main extends HttpServlet{
 
 	  try {
 		  JSONObject jsonObject = new JSONObject(jb.toString());
-		  if (req.getRequestURI().endsWith("/createAccount")) {
+		  if (req.getRequestURI().endsWith("/create")) {
 			  String name = jsonObject.getString("name");
 			  String about_me = jsonObject.getString("about_me");
 			  String village = jsonObject.getString("village");
