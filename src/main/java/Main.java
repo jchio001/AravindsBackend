@@ -72,6 +72,7 @@ public class Main extends HttpServlet{
 		  JSONObject jsonObject = new JSONObject(jb.toString());
 		  if (req.getRequestURI().endsWith("/createAccount")) {
 			  resp.setStatus(200);
+			  resp.getWriter().print("Creating!");
 			  String name = jsonObject.getString("name");
 			  String about_me = jsonObject.getString("about_me");
 			  String village = jsonObject.getString("village");
@@ -89,7 +90,6 @@ public class Main extends HttpServlet{
 				  stmt.setString(6, email);
 				  stmt.executeUpdate();
 				  stmt.close();
-				  resp.getWriter().print("Created!");
 			  }
 			  catch (SQLException e) {
 				  resp.getWriter().print("SQL ERROR @POST: " + getStackTrace(e));
