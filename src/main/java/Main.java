@@ -19,7 +19,30 @@ public class Main extends HttpServlet{
             "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32));";
     private static String TABLE_CREATION_2 = "CREATE TABLE IF NOT EXISTS Connections (requester_id int, target_id int, status varchar(32));";
 
-  @Override
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate(TABLE_CREATION);
+		}
+		catch (Exception e) {
+			resp.setStatus(500);
+			resp.getWriter().print("Table creation error: " + e.getMessage());
+		}
+
+		finally {
+			try {
+				connection.close();
+			}
+			catch (SQLException e) {
+				resp.getWriter().print("Failed to close connection: " + getStackTrace(e));
+			}
+		}
+	}
+
+  	@Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       Connection connection = null;
       try {
