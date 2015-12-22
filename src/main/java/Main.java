@@ -32,6 +32,23 @@ public class Main extends HttpServlet{
 			resp.getWriter().print("Table creation error: " + e.getMessage());
 		}
 
+
+		try {
+			String req_string = req.getRequestURI();
+			String[] split_req = req_string.split("/");
+
+			if (split_req[1].equals("createAccount")) {
+				doPost(req, resp);
+			}
+			else {
+				resp.setStatus(404);
+			}
+		}
+		catch (IOException e) {
+			resp.setStatus(500);
+			resp.getWriter().print("Failed to prepare SQL statement: " + getStackTrace(e));
+		}
+
 		finally {
 			try {
 				connection.close();
