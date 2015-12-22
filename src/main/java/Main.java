@@ -20,7 +20,7 @@ public class Main extends HttpServlet{
     private static String TABLE_CREATION_2 = "CREATE TABLE IF NOT EXISTS Connections (requester_id int, target_id int, status varchar(32));";
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       Connection connection = null;
       try {
           connection = getConnection();
