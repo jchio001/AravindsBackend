@@ -67,6 +67,7 @@ public class Main extends HttpServlet{
 				  stmt.close();
 			  }
 			  catch (SQLException e) {
+				  resp.getWriter().print("SQL ERROR @POST: " + getStackTrace(e));
 			  }
 		  }
 		  else {
