@@ -68,6 +68,7 @@ public class Main extends HttpServlet{
           resp.getWriter().print("Couldn't read in request body: " + getStackTrace(e));
       }
 
+		resp.getWriter().print("Creating!");
 	  try {
 		  JSONObject jsonObject = new JSONObject(jb.toString());
 		  if (req.getRequestURI().endsWith("/createAccount")) {
