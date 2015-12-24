@@ -27,7 +27,7 @@ public class Main extends HttpServlet{
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(TABLE_CREATION);
 			stmt.executeUpdate(TABLE_CREATION_2);
-			resp.getWriter().print("I did get.");
+			resp.getWriter().print("I did get X.");
 		}
 		catch (Exception e) {
 			resp.setStatus(500);
