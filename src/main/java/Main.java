@@ -26,6 +26,8 @@ public class Main extends HttpServlet{
 			connection = getConnection();
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(TABLE_CREATION);
+			stmt.executeUpdate(TABLE_CREATION_2);
+			resp.getWriter().print("I did get.");
 		}
 		catch (Exception e) {
 			resp.setStatus(500);
@@ -52,6 +54,7 @@ public class Main extends HttpServlet{
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(TABLE_CREATION);
 			stmt.executeUpdate(TABLE_CREATION_2);
+			resp.getWriter().print("I did post.");
 		}
 		catch (Exception e) {
 			resp.setStatus(500);
