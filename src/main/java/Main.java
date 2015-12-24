@@ -19,7 +19,6 @@ public class Main extends HttpServlet{
             "about_me varchar(1024), village varchar(32), zip_code int, phone_number varchar(16), email varchar(32));";
     private static String TABLE_CREATION_2 = "CREATE TABLE IF NOT EXISTS Connections (requester_id int, target_id int, status varchar(32));";
 
-	/*
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection connection = null;
@@ -42,7 +41,6 @@ public class Main extends HttpServlet{
 			}
 		}
 	}
-	*/
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
