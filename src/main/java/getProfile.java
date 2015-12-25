@@ -17,7 +17,13 @@ public class getProfile {
 		try {
 			String select_sql = "SELECT * from Profile where user_id = ?";
 			PreparedStatement stmt = connection.prepareStatement(select_sql);
-			stmt.setLong(1, Long.parseLong(id));
+			try {
+				stmt.setLong(1, Long.parseLong(id));
+			}
+			catch (NumberFormatException e) {
+				resp.setStatus(Constants.BAD_REQUEST);
+				return;
+			}
 
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
