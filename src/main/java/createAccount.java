@@ -15,7 +15,7 @@ public class createAccount {
 			String name = jsonObject.getString(Constants.NAME);
 			String about_me = jsonObject.getString(Constants.ABOUT_ME);
 			String village = jsonObject.getString(Constants.VILLAGE);
-			String zip_code = jsonObject.getString(Constants.ZIP_CODE);
+			int zip_code = jsonObject.getInt(Constants.ZIP_CODE);
 			String phone_number = jsonObject.getString(Constants.PHONE_NUMBER);
 			String email = jsonObject.getString(Constants.EMAIL);
 			String password = jsonObject.getString(Constants.PASSWORD);
@@ -25,7 +25,7 @@ public class createAccount {
 			stmt.setString(1, name);
 			stmt.setString(2, about_me);
 			stmt.setString(3, village);
-			stmt.setString(4, zip_code);
+			stmt.setInt(4, zip_code);
 			stmt.setString(5, phone_number);
 			stmt.setString(6, email);
 			stmt.setString(7, password);
