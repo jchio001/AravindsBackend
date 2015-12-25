@@ -62,6 +62,10 @@ public class Main extends HttpServlet {
 				JSONObject jsonObject = new JSONObject(requestBody.toString());
 				String path = request.getRequestURI();
 				String[] pathPieces = path.split("/");
+				if (pathPieces[1].equals("createAccount"))
+					createAccount.createAccount(request, response, connection, jsonObject);
+				else
+					response.setStatus(Constants.NOT_FOUND);
 
                 response.getWriter().print("POST!");
             }

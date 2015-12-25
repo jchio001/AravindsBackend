@@ -10,9 +10,8 @@ import java.sql.*;
  * Created by jman0_000 on 12/24/2015.
  */
 public class createAccount {
-	public static void createAccount(HttpServletRequest req, HttpServletResponse resp, StringBuffer jb, Connection connection) throws IOException{
+	public static void createAccount(HttpServletRequest req, HttpServletResponse resp, Connection connection, JSONObject jsonObject) throws IOException{
 		try {
-			JSONObject jsonObject = new JSONObject(jb.toString());
 			String name = jsonObject.getString(Constants.NAME);
 			String about_me = jsonObject.getString(Constants.ABOUT_ME);
 			String village = jsonObject.getString(Constants.VILLAGE);
@@ -45,7 +44,7 @@ public class createAccount {
 				}
 			}
 			stmt.close();
-			
+
 			JSONObject scoreReport = new JSONObject();
 			scoreReport.put(Constants.ID, userId);
 			resp.getWriter().print(scoreReport.toString());
