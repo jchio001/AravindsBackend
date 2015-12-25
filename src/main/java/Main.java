@@ -123,27 +123,27 @@ public class Main extends HttpServlet{
 		}
 	}
 
-    private static Connection getConnection() throws URISyntaxException, SQLException {
-      URI dbUri = new URI(System.getenv("DATABASE_URL"));
+	private static Connection getConnection() throws URISyntaxException, SQLException {
+		URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
-      String username = dbUri.getUserInfo().split(":")[0];
-      String password = dbUri.getUserInfo().split(":")[1];
-      String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+		String username = dbUri.getUserInfo().split(":")[0];
+		String password = dbUri.getUserInfo().split(":")[1];
+		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 
-      return DriverManager.getConnection(dbUrl, username, password);
+		return DriverManager.getConnection(dbUrl, username, password);
 	}
 
-    public static void main(String[] args) throws Exception {
-      Server server = new Server(Integer.valueOf(System.getenv("PORT")));
-      ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-      context.setContextPath("/");
-      server.setHandler(context);
-      context.addServlet(new ServletHolder(new Main()), "/*");
-      server.start();
-      server.join();
-    }
+	public static void main(String[] args) throws Exception {
+		Server server = new Server(Integer.valueOf(System.getenv("PORT")));
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		server.setHandler(context);
+		context.addServlet(new ServletHolder(new Main()), "/*");
+		server.start();
+		server.join();
+	}
 
-    public static String getStackTrace(Throwable aThrowable) {
+	public static String getStackTrace(Throwable aThrowable) {
       final Writer result = new StringWriter();
       final PrintWriter printWriter = new PrintWriter(result);
       aThrowable.printStackTrace(printWriter);
