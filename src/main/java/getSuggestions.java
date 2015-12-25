@@ -36,18 +36,9 @@ public class getSuggestions {
 				resp.setStatus(Constants.BAD_REQUEST);
 				return;
 			}
-
-			int min_zip = zip_code - 2;
-			int max_zip = zip_code + 2;
-			select_sql = "Select user_id, name, village, zip_code FROM Profile where village = ? and zip_code BETWEEN " +
-					"? and ?";
-			stmt = connection.prepareStatement(select_sql);
-			stmt.setString(1, village);
-			stmt.setInt(2, min_zip);
-			stmt.setInt(3, max_zip);
-			rs = stmt.executeQuery();
-
-			resp.getWriter().print(printJSONArr(rs));
+			
+			rs = getSuggestionResults(stmt, connection, village, zip_code);
+			resp.getWriter().print(getJSONArr(rs));
 		}
 		catch (SQLException|JSONException e){
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
@@ -55,7 +46,21 @@ public class getSuggestions {
 		}
 	}
 
-	public static String printJSONArr(ResultSet rs) throws JSONException, SQLException{
+	public static ResultSet getSuggestionResults(PreparedStatement stmt, Connection connection, String village, int zip_code)
+	throws SQLException{
+		int min_zip = zip_code - 2;
+		int max_zip = zip_code + 2;
+		String select_sql = "Select user_id, name, village, zip_code FROM Profile where village = ? and zip_code BETWEEN " +
+				"? and ?";
+		stmt = connection.prepareStatement(select_sql);
+		stmt.setString(1, village);
+		stmt.setInt(2, min_zip);
+		stmt.setInt(3, max_zip);
+		return stmt.executeQuery();
+
+	}
+
+	public static String getJSONArr(ResultSet rs) throws JSONException, SQLException{
 		JSONArray suggestionArr = new JSONArray();
 		JSONObject user;
 		while (rs.next()) {
