@@ -19,6 +19,12 @@ public class createAccount {
 			String phone_number = jsonObject.getString(Constants.PHONE_NUMBER);
 			String email = jsonObject.getString(Constants.EMAIL);
 			String password = jsonObject.getString(Constants.PASSWORD);
+
+			if (userExists(connection, email, phone_number)) {
+				resp.setStatus(Constants.BAD_REQUEST);
+				return;
+			}
+
 			String update_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = connection.prepareStatement(update_sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -58,6 +64,16 @@ public class createAccount {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(Main.getStackTrace(exception));
 		}
+	}
+
+	public static boolean userExists(Connection connection, String email, String phone_number)
+	throws SQLException{
+		String select_sql = "Select * from Profile where email = ? or phone_number = ?";
+		PreparedStatement stmt = connection.prepareStatement(select_sql);
+		stmt.setString(1, email);
+		stmt.setString(2, phone_number);
+		ResultSet rs = stmt.executeQuery();
+		return rs.next();
 	}
 }
 
