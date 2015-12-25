@@ -1,5 +1,6 @@
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.omg.CORBA.INTERNAL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ public class createAccount {
 					userId = generatedKeys.getLong(1);
 				}
 				else {
+					resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 					throw new SQLException();
 				}
 			}

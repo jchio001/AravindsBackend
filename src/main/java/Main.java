@@ -67,7 +67,7 @@ public class Main extends HttpServlet {
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
-                response.getWriter().print("POST!");
+                //response.getWriter().print("POST!");
             }
 			catch (JSONException e) {
 				response.setStatus(Constants.BAD_REQUEST);
