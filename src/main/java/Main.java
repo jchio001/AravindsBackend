@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main extends HttpServlet {
 	@Override
@@ -35,7 +37,7 @@ public class Main extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 		// Get request body into string
 		StringBuilder requestBody = new StringBuilder();
 		String line;
@@ -67,6 +69,9 @@ public class Main extends HttpServlet {
 				response.setStatus(Constants.BAD_REQUEST);
 				response.getWriter().print(Constants.BAD_BODY_MESSAGE);
 			}
+
+
+
 			finally {
 				try {
 					connection.close();
@@ -74,6 +79,13 @@ public class Main extends HttpServlet {
 				catch (SQLException ignored) {}
 			}
 		}
+	}
+
+	public static String getStackTrace(Throwable aThrowable) {
+		final Writer result = new StringWriter();
+		final PrintWriter printWriter = new PrintWriter(result);
+		aThrowable.printStackTrace(printWriter);
+		return result.toString();
 	}
 
 	private static Connection getConnection(HttpServletResponse response) throws IOException {
