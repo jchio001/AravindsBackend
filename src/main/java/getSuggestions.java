@@ -52,8 +52,8 @@ public class getSuggestions {
 			while (rs.next()) {
 				user = new JSONObject();
 				user.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
-				user.put(Constants.NAME, rs.getInt(Constants.NAME));
-				user.put(Constants.VILLAGE, rs.getInt(Constants.VILLAGE));
+				user.put(Constants.NAME, rs.getString(Constants.NAME));
+				user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
 				user.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
 				suggestionArr.put(user);
 			}
