@@ -36,25 +36,7 @@ public class createAccount {
 			stmt.setString(6, email);
 			stmt.setString(7, password);
 
-			long userId;
-			int affectedRows = stmt.executeUpdate();
-			if (affectedRows == 0) {
-				throw new SQLException();
-			}
-			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-				if (generatedKeys.next()) {
-					userId = generatedKeys.getLong(1);
-				}
-				else {
-					resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
-					throw new SQLException();
-				}
-			}
-			stmt.close();
-
-			JSONObject scoreReport = new JSONObject();
-			scoreReport.put(Constants.ID, userId);
-			resp.getWriter().print(scoreReport.toString());
+			returnID(stmt, resp);
 		}
 		catch (JSONException e) {
 			resp.setStatus(Constants.BAD_REQUEST);
@@ -74,6 +56,28 @@ public class createAccount {
 		stmt.setString(2, phone_number);
 		ResultSet rs = stmt.executeQuery();
 		return rs.next();
+	}
+
+	public static void returnID(PreparedStatement stmt, HttpServletResponse resp) throws SQLException, JSONException, IOException{
+		long userId;
+		int affectedRows = stmt.executeUpdate();
+		if (affectedRows == 0) {
+			throw new SQLException();
+		}
+		try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+			if (generatedKeys.next()) {
+				userId = generatedKeys.getLong(1);
+			}
+			else {
+				resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
+				throw new SQLException();
+			}
+		}
+		stmt.close();
+
+		JSONObject scoreReport = new JSONObject();
+		scoreReport.put(Constants.ID, userId);
+		resp.getWriter().print(scoreReport.toString());
 	}
 }
 
