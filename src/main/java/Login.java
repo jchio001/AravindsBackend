@@ -37,7 +37,7 @@ public class Login {
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 			int user_id;
-			if (rs.first()) {
+			if (rs.next()) {
 				user_id = rs.getInt(Constants.ID);
 				JSONObject id = new JSONObject();
 				id.put(Constants.ID, user_id);
