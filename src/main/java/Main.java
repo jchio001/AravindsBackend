@@ -75,7 +75,7 @@ public class Main extends HttpServlet{
 
 		try {
 			JSONObject jsonObject = new JSONObject(jb.toString());
-			if (req.getRequestURI().endsWith("/createAccount"/)) {
+			if (req.getRequestURI().endsWith("/createAccount/")) {
 				resp.setStatus(200);
 				resp.getWriter().print("Creating!");
 				String name = jsonObject.getString("name");
