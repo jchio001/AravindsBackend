@@ -47,21 +47,25 @@ public class getSuggestions {
 			stmt.setInt(3, max_zip);
 			rs = stmt.executeQuery();
 
-			JSONArray suggestionArr = new JSONArray();
-			JSONObject user;
-			while (rs.next()) {
-				user = new JSONObject();
-				user.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
-				user.put(Constants.NAME, rs.getString(Constants.NAME));
-				user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
-				user.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
-				suggestionArr.put(user);
-			}
-			resp.getWriter().print(suggestionArr.toString());
+			resp.getWriter().print(printJSONArr(rs));
 		}
 		catch (SQLException|JSONException e){
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(e.getMessage());
 		}
+	}
+
+	public static String printJSONArr(ResultSet rs) throws JSONException, SQLException{
+		JSONArray suggestionArr = new JSONArray();
+		JSONObject user;
+		while (rs.next()) {
+			user = new JSONObject();
+			user.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
+			user.put(Constants.NAME, rs.getString(Constants.NAME));
+			user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+			user.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+			suggestionArr.put(user);
+		}
+		return suggestionArr.toString();
 	}
 }
