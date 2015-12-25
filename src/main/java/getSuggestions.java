@@ -43,8 +43,8 @@ public class getSuggestions {
 					"? and ?";
 			stmt = connection.prepareStatement(select_sql);
 			stmt.setString(1, village);
-			stmt.setInt(1, min_zip);
-			stmt.setInt(1, max_zip);
+			stmt.setInt(2, min_zip);
+			stmt.setInt(3, max_zip);
 			rs = stmt.executeQuery();
 
 			JSONArray suggestionArr = new JSONArray();
