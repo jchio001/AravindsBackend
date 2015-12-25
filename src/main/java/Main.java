@@ -26,6 +26,8 @@ public class Main extends HttpServlet {
 				String[] pathPieces = path.split("/");
 				if (pathPieces[1].equals("profile") && pathPieces.length == 3)
 					getProfile.getProfile(request, response, connection, pathPieces[2]);
+				else if (pathPieces[1].equals("suggestions") && pathPieces.length == 3)
+					getSuggestions.getSuggestions(request, response, connection, pathPieces[2]);
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
