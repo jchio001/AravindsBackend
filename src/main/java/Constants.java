@@ -14,6 +14,7 @@ public class Constants {
     public static final String NAME = "name";
     public static final String ABOUT_ME = "about_me";
     public static final String ID = "id";
+    public static final String USER_ID = "user_id";
     public static final String VILLAGE = "village";
     public static final String ZIP_CODE = "zip_code";
     public static final String PHONE_NUMBER = "phone_number";
