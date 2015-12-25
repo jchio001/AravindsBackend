@@ -25,8 +25,6 @@ public class Main extends HttpServlet {
 				String path = request.getRequestURI();
 				String[] pathPieces = path.split("/");
 
-				response.getWriter().print("GET!");
-
 				connection.close();
 			}
 		}
@@ -64,6 +62,8 @@ public class Main extends HttpServlet {
 				String[] pathPieces = path.split("/");
 				if (pathPieces[1].equals("createAccount"))
 					createAccount.createAccount(request, response, connection, jsonObject);
+				else if (pathPieces[1].equals("login"))
+					Login.login(request, response, connection, jsonObject);
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
