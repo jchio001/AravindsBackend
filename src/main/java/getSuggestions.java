@@ -17,9 +17,11 @@ public class getSuggestions {
 	public static void getSuggestions(HttpServletRequest req, HttpServletResponse resp, Connection connection, String id) throws IOException {
 		try {
 			String select_sql = "SELECT village, zip_code FROM Profile where user_id = ?";
+			long req_id;
 			PreparedStatement stmt = connection.prepareStatement(select_sql);
 			try {
-				stmt.setLong(1, Long.parseLong(id));
+				req_id = Long.parseLong(id);
+				stmt.setLong(1, req_id);
 			}
 			catch (NumberFormatException e) {
 				resp.setStatus(Constants.BAD_REQUEST);
@@ -36,8 +38,8 @@ public class getSuggestions {
 				resp.setStatus(Constants.BAD_REQUEST);
 				return;
 			}
-			
-			rs = getSuggestionResults(stmt, connection, village, zip_code);
+
+			rs = getSuggestionResults(stmt, connection, village, req_id, zip_code);
 			resp.getWriter().print(getJSONArr(rs));
 		}
 		catch (SQLException|JSONException e){
@@ -46,16 +48,17 @@ public class getSuggestions {
 		}
 	}
 
-	public static ResultSet getSuggestionResults(PreparedStatement stmt, Connection connection, String village, int zip_code)
+	public static ResultSet getSuggestionResults(PreparedStatement stmt, Connection connection, String village, Long req_id, int zip_code)
 	throws SQLException{
 		int min_zip = zip_code - 2;
 		int max_zip = zip_code + 2;
-		String select_sql = "Select user_id, name, village, zip_code FROM Profile where village = ? and zip_code BETWEEN " +
-				"? and ?";
+		String select_sql = "Select user_id, name, village, zip_code FROM Profile where village = ? and user_id != ? " +
+				"and zip_code BETWEEN ? and ?";
 		stmt = connection.prepareStatement(select_sql);
 		stmt.setString(1, village);
-		stmt.setInt(2, min_zip);
-		stmt.setInt(3, max_zip);
+		stmt.setLong(2, req_id);
+		stmt.setInt(3, min_zip);
+		stmt.setInt(4, max_zip);
 		return stmt.executeQuery();
 
 	}
