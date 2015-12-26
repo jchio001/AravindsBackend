@@ -31,9 +31,10 @@ public class getProfile {
 				resp.setStatus(Constants.BAD_REQUEST);
 				return;
 			}
-
+			resp.getWriter().print("Getting Status!");
 			String status = getConnStatus(resp, connection, id1, id2);
-			resp.getWriter().print(status);
+			resp.getWriter().print("Done!");
+			resp.getWriter().print("Status: " + status);
 		}
 		catch (SQLException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
@@ -41,7 +42,8 @@ public class getProfile {
 		}
 	}
 
-	public static String getConnStatus(HttpServletResponse resp, Connection connection, String id1, String id2) throws SQLException{
+	public static String getConnStatus(HttpServletResponse resp, Connection connection, String id1, String id2) throws SQLException, IOException{
+		resp.getWriter().print("Getting Status!");
 		String select_sql = "Select * from Connections where (requester_id = ? and target_id = ?) or (requester_id = ? and target_id = ?)";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		Long req_id, target_id;
