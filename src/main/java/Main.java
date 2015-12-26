@@ -70,8 +70,12 @@ public class Main extends HttpServlet {
 					createAccount.createAccount(request, response, connection, jsonObject);
 				else if (pathPieces[1].equals("login"))
 					Login.login(request, response, connection, jsonObject);
-				else if (pathPieces[1].equals("connections/request"))
-					sendConn.sendConn(request, response, connection, jsonObject);
+				else if (pathPieces[1].equals("connections")) {
+					if (pathPieces[2].equals("request"))
+						sendConn.sendConn(request, response, connection, jsonObject);
+					else
+						response.setStatus(Constants.NOT_FOUND);
+				}
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
