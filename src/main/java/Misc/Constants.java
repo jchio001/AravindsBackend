@@ -38,4 +38,14 @@ public class Constants {
     public static final String PENDING = "PENDING";
     public static final String ACCEPTED = "ACCEPTED";
     public static final String REJECTED = "REJECTED";
+
+
+    //get profile status. Rel = relative, as in their profile's status relatives to yours (the requester)
+    public static final String REL_UNCONNECTED = "Unconncted";
+    public static final String REL_PENDING = "Pending";
+    public static final String REL_AWAITING_YOUR_APPROVAL = "Awaiting your approval";
+    public static final String REL_ACCEPTED = "Accepted";
+    public static final String REL_REJECTED = "Rejected";
+    public static final String REL_REJECTED_BY_YOU = "Rejected by you";
+
 }

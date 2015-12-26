@@ -25,8 +25,8 @@ public class Main extends HttpServlet {
 			if (connection != null) {
 				String path = request.getRequestURI();
 				String[] pathPieces = path.split("/");
-				if (pathPieces[1].equals("profile") && pathPieces.length == 3)
-					getProfile.getProfile(request, response, connection, pathPieces[2]);
+				if (pathPieces[1].equals("profile") && pathPieces.length == 4)
+					getProfile.getProfile(request, response, connection, pathPieces[2], pathPieces[3]);
 				else if (pathPieces[1].equals("suggestions") && pathPieces.length == 3)
 					getSuggestions.getSuggestions(request, response, connection, pathPieces[2]);
 				else if (pathPieces[1].equals("connections")) {
