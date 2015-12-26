@@ -53,6 +53,9 @@ public class getProfile {
 			return "";
 		}
 
+		if (req_id == target_id)
+			return "";
+
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
 			return getStatusString(req_id, target_id, rs);
