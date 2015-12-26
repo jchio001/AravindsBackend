@@ -16,34 +16,28 @@ import java.sql.SQLException;
 public class getProfile {
 	public static void getProfile(HttpServletRequest req, HttpServletResponse resp, Connection connection, String id1, String id2) throws IOException {
 		try {
-			String select_sql = "Select * from Connections where (requester_id = ? and target_id = ?) or (requester_id = ? and target_id = ?)";
-			PreparedStatement stmt = connection.prepareStatement(select_sql);
-			Long req_id, target_id;
-			try {
-				req_id = Long.parseLong(id1);
-				target_id = Long.parseLong(id2);
-				stmt.setLong(1, req_id);
-				stmt.setLong(2, target_id);
-				stmt.setLong(3, target_id);
-				stmt.setLong(4, req_id);
-			}
-			catch (NumberFormatException e) {
+			String status = getConnStatus(connection, id1, id2);
+			if (status.equals("")) {
 				resp.setStatus(Constants.BAD_REQUEST);
 				return;
 			}
-			resp.getWriter().print("Getting Status!\n");
-			String status = getConnStatus(resp, connection, id1, id2);
-			resp.getWriter().print("Done!\n");
-			resp.getWriter().print("Status: " + status);
+
+			ResultSet rs = getProfileRS(connection, id2);
+			if (rs.next()) {
+				resp.getWriter().print(respondWithJSONString(rs, status));
+			}
+			else {
+				resp.setStatus(Constants.BAD_REQUEST);
+				return;
+			}
 		}
-		catch (SQLException e) {
+		catch (SQLException|JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(e.getMessage());
 		}
 	}
 
-	public static String getConnStatus(HttpServletResponse resp, Connection connection, String id1, String id2) throws SQLException, IOException{
-		resp.getWriter().print("Calling getConStatus with id1: " + id1 + ", id2: " + id2 + "\n");
+	public static String getConnStatus(Connection connection, String id1, String id2) throws SQLException, IOException{
 		String select_sql = "Select * from Connections where (requester_id = ? and target_id = ?) or (requester_id = ? and target_id = ?)";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		Long req_id, target_id;
@@ -56,7 +50,6 @@ public class getProfile {
 			stmt.setLong(4, req_id);
 		}
 		catch (NumberFormatException e) {
-			resp.setStatus(Constants.BAD_REQUEST);
 			return "";
 		}
 
@@ -92,5 +85,25 @@ public class getProfile {
 		}
 		else
 			return "";
+	}
+
+	public static ResultSet getProfileRS(Connection connection, String id) throws SQLException{
+		String select_sql = "Select name, about_me, village, zip_code, phone_number, email from " +
+				"Profile where user_id = ?";
+		PreparedStatement stmt = connection.prepareStatement(select_sql);
+		stmt.setLong(1, Long.parseLong(id));
+		return stmt.executeQuery();
+	}
+
+	public static String respondWithJSONString(ResultSet rs, String status) throws SQLException, JSONException{
+		JSONObject profile = new JSONObject();
+		profile.put(Constants.NAME, rs.getString(Constants.NAME));
+		profile.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
+		profile.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+		profile.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+		profile.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
+		profile.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
+		profile.put(Constants.STATUS, status);
+		return profile.toString();
 	}
 }
