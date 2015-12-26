@@ -21,7 +21,7 @@ public class sentOrRcvdConn {
 			throws IOException {
 		try {
 			String select_sql;
-			if (mode.equals("send")) {
+			if (mode.equals("sent")) {
 				select_sql = "Select c.target_id, c.status, p.* from connections c " +
 						"join profile p on p.user_id = c.target_id " +
 						"where c.requester_id = ?;";
@@ -31,6 +31,7 @@ public class sentOrRcvdConn {
 						"join profile p on p.user_id = c.target_id " +
 						"where c.target_id = ?;";
 			}
+
 			PreparedStatement stmt = connection.prepareStatement(select_sql);
 			try {
 				stmt.setLong(1, Long.parseLong(id));
