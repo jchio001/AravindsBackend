@@ -28,7 +28,7 @@ public class sentOrRcvdConn {
 			}
 			else {
 				select_sql = "Select c.requester_id, c.status, p.* from connections c " +
-						"join profile p on p.user_id = c.target_id " +
+						"join profile p on p.user_id = c.requester_id " +
 						"where c.target_id = ?;";
 			}
 
