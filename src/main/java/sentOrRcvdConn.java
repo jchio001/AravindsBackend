@@ -58,6 +58,7 @@ public class sentOrRcvdConn {
 			userJSON.put(Constants.VILLAGE, rs.getLong(Constants.VILLAGE));
 			userJSON.put(Constants.ZIP_CODE, rs.getLong(Constants.ZIP_CODE));
 			userJSON.put(Constants.STATUS, rs.getLong(Constants.STATUS));
+			resultArr.put(userJSON);
 		}
 		return resultArr.toString();
 	}
