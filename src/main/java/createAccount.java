@@ -25,8 +25,8 @@ public class createAccount {
 				return;
 			}
 
-			String update_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement stmt = connection.prepareStatement(update_sql, Statement.RETURN_GENERATED_KEYS);
+			String insert_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, name);
 			stmt.setString(2, about_me);

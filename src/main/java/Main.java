@@ -70,6 +70,8 @@ public class Main extends HttpServlet {
 					createAccount.createAccount(request, response, connection, jsonObject);
 				else if (pathPieces[1].equals("login"))
 					Login.login(request, response, connection, jsonObject);
+				else if (pathPieces[1].equals("connections/request"))
+					sendConn.sendConn(request, response, connection, jsonObject);
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
@@ -79,8 +81,6 @@ public class Main extends HttpServlet {
 				response.setStatus(Constants.BAD_REQUEST);
 				response.getWriter().print(Constants.BAD_BODY_MESSAGE);
 			}
-
-
 
 			finally {
 				try {

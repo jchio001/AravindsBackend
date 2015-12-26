@@ -11,6 +11,7 @@ public class Constants {
     public static final String BAD_BODY_MESSAGE = "Request body wasn't a valid JSON.";
     public static final String DB_CONNECTION_FAIL = "Unable to connect to database.";
 
+    //KEYS
     public static final String NAME = "name";
     public static final String ABOUT_ME = "about_me";
     public static final String ID = "id";
@@ -20,4 +21,13 @@ public class Constants {
     public static final String PHONE_NUMBER = "phone_number";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+
+    //CONN KEYS
+    public static final String REQ_ID = "requester_id";
+    public static final String TARGET_ID = "target_id";
+
+    //status strings
+    public static final String PENDING = "PENDING";
+    public static final String ACCEPTED = "ACCEPTED";
+    public static final String REJECTED = "REJECTED";
 }

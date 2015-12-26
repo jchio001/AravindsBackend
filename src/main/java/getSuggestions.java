@@ -30,6 +30,7 @@ public class getSuggestions {
 			String village;
 			int zip_code;
 			ResultSet rs = stmt.executeQuery();
+			//Think of it like this: each item in the DB is an item in the RS.
 			if (rs.next()) {
 				village = rs.getString(Constants.VILLAGE);
 				zip_code = rs.getInt(Constants.ZIP_CODE);
@@ -60,7 +61,6 @@ public class getSuggestions {
 		stmt.setInt(3, min_zip);
 		stmt.setInt(4, max_zip);
 		return stmt.executeQuery();
-
 	}
 
 	public static String getJSONArr(ResultSet rs) throws JSONException, SQLException{
