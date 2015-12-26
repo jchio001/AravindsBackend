@@ -24,6 +24,7 @@ public class Constants {
     //CONN KEYS
     public static final String REQ_ID = "requester_id";
     public static final String TARGET_ID = "target_id";
+    public static final String STATUS = "status";
 
     //status strings
     public static final String PENDING = "PENDING";

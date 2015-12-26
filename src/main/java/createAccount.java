@@ -80,5 +80,9 @@ public class createAccount {
 		scoreReport.put(Constants.ID, userId);
 		resp.getWriter().print(scoreReport.toString());
 	}
+
+	/**
+	 * Created by jman0_000 on 12/25/2015.
+	 */
 }
 
