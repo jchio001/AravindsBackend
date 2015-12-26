@@ -12,19 +12,17 @@ import java.sql.SQLException;
 /**
  * Created by jman0_000 on 12/25/2015.
  */
-
-//table name = conn;
-public class sendConn {
-	public static void sendConn(HttpServletRequest req, HttpServletResponse resp, Connection connection, JSONObject jsonObject)
+public class acceptConn {
+	public static void acceptConn(HttpServletRequest req, HttpServletResponse resp, Connection connection, JSONObject jsonObject)
 	throws IOException{
 		try {
 			Long req_id = jsonObject.getLong(Constants.REQ_ID);
 			Long target_id = jsonObject.getLong(Constants.TARGET_ID);
-			String insert_sql = "Insert into Connections (requester_id, target_id, status) VALUES (?, ?, ?)";
+			String insert_sql = "UPDATE Connections SET status = ? where requester_id = ? and target_id = ?";
 			PreparedStatement stmt = connection.prepareStatement(insert_sql);
-			stmt.setLong(1, req_id);
-			stmt.setLong(2, target_id);
-			stmt.setString(3, Constants.PENDING);
+			stmt.setString(1, Constants.ACCEPTED);
+			stmt.setLong(2, req_id);
+			stmt.setLong(3, target_id);
 			stmt.executeUpdate();
 		}
 		catch (JSONException e) {

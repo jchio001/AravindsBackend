@@ -1,3 +1,4 @@
+import Misc.Constants;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -73,6 +74,8 @@ public class Main extends HttpServlet {
 				else if (pathPieces[1].equals("connections")) {
 					if (pathPieces[2].equals("request"))
 						sendConn.sendConn(request, response, connection, jsonObject);
+					else if (pathPieces[2].equals("accept"))
+						acceptConn.acceptConn(request, response, connection, jsonObject);
 					else
 						response.setStatus(Constants.NOT_FOUND);
 				}

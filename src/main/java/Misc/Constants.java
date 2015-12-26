@@ -1,6 +1,5 @@
-/**
- * Created by alexanderchiou on 12/24/15.
- */
+package Misc;
+
 public class Constants {
     public static final int BAD_REQUEST = 400;
     public static final int UNATHORIZED = 401;
