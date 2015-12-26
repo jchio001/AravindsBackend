@@ -20,7 +20,7 @@ public class sendConn {
 		try {
 			Long req_id = jsonObject.getLong(Constants.REQ_ID);
 			Long target_id = jsonObject.getLong(Constants.TARGET_ID);
-			String insert_sql = "Insert into Connections (requester_id, target_id, status VALUES (?, ?, ?)";
+			String insert_sql = "Insert into Connections (requester_id, target_id, status) VALUES (?, ?, ?)";
 			PreparedStatement stmt = connection.prepareStatement(insert_sql);
 			stmt.setLong(1, req_id);
 			stmt.setLong(2, target_id);
