@@ -26,12 +26,12 @@ public class Login {
 			String select_sql;
 			PreparedStatement stmt;
 			if (email.isEmpty()) {
-				select_sql = "Select user_id from Profile where phone_number = ? and password  = ?";
+				select_sql = "Select * from Profile where phone_number = ? and password  = ?";
 				stmt = connection.prepareStatement(select_sql);
 				stmt.setString(1, phone_num);
 			}
 			else {
-				select_sql = "Select user_id from Profile where email = ? and password  = ?";
+				select_sql = "Select * from Profile where email = ? and password  = ?";
 				stmt = connection.prepareStatement(select_sql);
 				stmt.setString(1, email);
 			}
@@ -39,9 +39,15 @@ public class Login {
 			ResultSet rs = stmt.executeQuery();
 			int user_id;
 			if (rs.next()) {
-				user_id = rs.getInt(Constants.USER_ID);
+				//user_id = rs.getInt(Constants.USER_ID);
 				JSONObject id = new JSONObject();
-				id.put(Constants.USER_ID, user_id);
+				id.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
+				id.put(Constants.NAME, rs.getString(Constants.NAME));
+				id.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
+				id.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+				id.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+				id.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
+				id.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
 				resp.getWriter().print(id.toString());
 			}
 			else

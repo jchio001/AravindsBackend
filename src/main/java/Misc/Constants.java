@@ -1,6 +1,14 @@
 package Misc;
 
 public class Constants {
+    //id (Sequence)
+    //name (32 characters)
+    //about_me (1024 characters)
+    //village (32 characters)
+    //zip_code (int, 8 digits)
+    //phone_number (16 characters)
+    //email (32 characters)
+
     public static final int BAD_REQUEST = 400;
     public static final int UNATHORIZED = 401;
     public static final int NOT_FOUND = 404;
