@@ -40,15 +40,15 @@ public class sentOrRcvdConn {
 				return;
 			}
 			ResultSet rs = stmt.executeQuery();
-
+			resp.getWriter().print(setUpInfoJSON(rs, Long.parseLong(id)));
 		}
-		catch (SQLException e) {
+		catch (SQLException|JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(e.getMessage());
 		}
 	}
 
-	public static String setUpInfoJSON(ResultSet rs, int id) throws SQLException, JSONException {
+	public static String setUpInfoJSON(ResultSet rs, Long id) throws SQLException, JSONException {
 		JSONArray resultArr = new JSONArray();
 		JSONObject userJSON;
 		while (rs.next()) {
