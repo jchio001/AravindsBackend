@@ -76,6 +76,8 @@ public class Main extends HttpServlet {
 						sendConn.sendConn(request, response, connection, jsonObject);
 					else if (pathPieces[2].equals("accept"))
 						acceptConn.acceptConn(request, response, connection, jsonObject);
+					else if (pathPieces[2].equals("reject"))
+						rejectConn.rejectConn(request, response, connection, jsonObject);
 					else
 						response.setStatus(Constants.NOT_FOUND);
 				}
