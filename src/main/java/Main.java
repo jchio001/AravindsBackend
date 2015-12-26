@@ -75,7 +75,7 @@ public class Main extends HttpServlet {
 				String[] pathPieces = path.split("/");
 				if (pathPieces[1].equals("createAccount"))
 					createAccount.createAccount(request, response, connection, jsonObject);
-				else if (pathPieces[1].equals("update"))
+				else if (pathPieces[1].equals("updateProfile"))
 					updateProfile.update(request, response, connection, jsonObject);
 				else if (pathPieces[1].equals("login"))
 					Login.login(request, response, connection, jsonObject);
