@@ -53,7 +53,7 @@ public class getProfile {
 			return "";
 		}
 
-		if (req_id == target_id)
+		if (req_id == target_id || req_id == 0 || target_id == 0)
 			return "";
 
 		ResultSet rs = stmt.executeQuery();
