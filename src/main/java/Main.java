@@ -38,7 +38,10 @@ public class Main extends HttpServlet {
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
-				connection.close();
+				try {
+					connection.close();
+				}
+				catch (SQLException ignored) {}
 			}
 		}
 		catch (Exception e) {
