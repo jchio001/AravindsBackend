@@ -28,9 +28,11 @@ public class getAcceptedConnections {
 		}
 		try {
 			ResultSet rs = runSelectQuery(connection, src_id);
-			resp.getWriter().print("1");
 			ArrayList<Long> id_arr = parseIDs(rs, src_id);
-			resp.getWriter().print("2");
+			if (id_arr == null) {
+				resp.setStatus(Constants.BAD_REQUEST);
+				return;
+			}
 			resp.getWriter().print(makeUserJSON(connection, id_arr));
 			resp.getWriter().print("3");
 		}
