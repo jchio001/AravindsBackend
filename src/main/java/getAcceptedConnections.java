@@ -77,7 +77,9 @@ public class getAcceptedConnections {
 		while (rs.next()) {
 			user = new JSONObject();
 			user.put(Constants.USER_ID, rs.getLong(Constants.USER_ID));
-			user.put(Constants.STATUS, Constants.ACCEPTED);
+			user.put(Constants.NAME, rs.getLong(Constants.NAME));
+			user.put(Constants.ZIP_CODE, rs.getLong(Constants.ZIP_CODE));
+			user.put(Constants.VILLAGE, rs.getLong(Constants.VILLAGE));
 			userArr.put(user);
 		}
 		return userArr.toString();
