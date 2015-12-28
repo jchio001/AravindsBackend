@@ -19,16 +19,7 @@ public class Login {
 			ResultSet rs = getProfile(connection, jsonObject);
 			int user_id;
 			if (rs.next()) {
-				//user_id = rs.getInt(Constants.USER_ID);
-				JSONObject id = new JSONObject();
-				id.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
-				id.put(Constants.NAME, rs.getString(Constants.NAME));
-				id.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
-				id.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
-				id.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
-				id.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
-				id.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
-				resp.getWriter().print(id.toString());
+				resp.getWriter().print(makeProfileJSON(rs).toString());
 			}
 			else
 				resp.setStatus(Constants.UNATHORIZED);
@@ -65,6 +56,18 @@ public class Login {
 		}
 		stmt.setString(2, password);
 		return stmt.executeQuery();
+	}
+
+	public static JSONObject makeProfileJSON(ResultSet rs) throws SQLException, JSONException{
+		JSONObject id = new JSONObject();
+		id.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
+		id.put(Constants.NAME, rs.getString(Constants.NAME));
+		id.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
+		id.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+		id.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+		id.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
+		id.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
+		return id;
 	}
 
 }
