@@ -29,11 +29,11 @@ public class Main extends HttpServlet {
 					getProfile.getProfile(request, response, connection, pathPieces[2], pathPieces[3]);
 				else if (pathPieces[1].equals("suggestions") && pathPieces.length == 3)
 					getSuggestions.getSuggestions(request, response, connection, pathPieces[2]);
-				else if (pathPieces[1].equals("connections") && pathPieces.length == 3)
-					getAcceptedConnections.getAcceptedConnections(request, response, connection, pathPieces[2]);
 				else if (pathPieces[1].equals("connections")) {
 					if ((pathPieces[2].equals("sent") || pathPieces[2].equals("received")) && pathPieces.length == 4)
 						sentOrRcvdConn.getSentOrRcvdConns(request, response, connection, pathPieces[2], pathPieces[3]);
+					else if (pathPieces.length == 3)
+						getAcceptedConnections.getAcceptedConnections(request, response, connection, pathPieces[2]);
 					else
 						response.setStatus(Constants.NOT_FOUND);
 				}
