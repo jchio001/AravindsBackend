@@ -20,19 +20,7 @@ public class sentOrRcvdConn {
 	public static void getSentOrRcvdConns(HttpServletRequest req, HttpServletResponse resp, Connection connection, String mode, String id)
 			throws IOException {
 		try {
-			String select_sql;
-			if (mode.equals("sent")) {
-				select_sql = "Select c.target_id, c.status, p.* from connections c " +
-						"join profile p on p.user_id = c.target_id " +
-						"where c.requester_id = ?;";
-			}
-			else {
-				select_sql = "Select c.requester_id, c.status, p.* from connections c " +
-						"join profile p on p.user_id = c.requester_id " +
-						"where c.target_id = ?;";
-			}
-
-			PreparedStatement stmt = connection.prepareStatement(select_sql);
+			PreparedStatement stmt = connection.prepareStatement(setUpSQL(mode));
 			try {
 				stmt.setLong(1, Long.parseLong(id));
 			}
@@ -46,6 +34,19 @@ public class sentOrRcvdConn {
 		catch (SQLException|JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(e.getMessage());
+		}
+	}
+
+	public static String setUpSQL(String mode) {
+		if (mode.equals("sent")) {
+			return "Select c.target_id, c.status, p.* from connections c " +
+					"join profile p on p.user_id = c.target_id " +
+					"where c.requester_id = ?;";
+		}
+		else {
+			return "Select c.requester_id, c.status, p.* from connections c " +
+					"join profile p on p.user_id = c.requester_id " +
+					"where c.target_id = ?;";
 		}
 	}
 
