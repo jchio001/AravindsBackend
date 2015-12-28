@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//NOTE: for example on to write a back-end function, check-out Login.java!
+//NOTE: for example on how to write a back-end function, check-out Login.java!
 public class Main extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
