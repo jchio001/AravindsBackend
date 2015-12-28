@@ -32,6 +32,7 @@ public class getSuggestions {
 			int zip_code;
 			ResultSet rs = stmt.executeQuery();
 			//Think of it like this: each item in the DB is an item in the RS.
+
 			if (rs.next()) {
 				village = rs.getString(Constants.VILLAGE);
 				zip_code = rs.getInt(Constants.ZIP_CODE);
