@@ -39,6 +39,8 @@ public class Constants {
     public static final String ACCEPTED = "ACCEPTED";
     public static final String REJECTED = "REJECTED";
 
+    //count string
+    public static final String COUNT = "count";
 
     //get profile status. Rel = relative, as in their profile's status relative to yours (the requester)
     public static final String REL_UNCONNECTED = "Unconnected";
