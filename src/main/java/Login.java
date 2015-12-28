@@ -13,15 +13,18 @@ import java.sql.SQLException;
 /**
  * Created by jman0_000 on 12/24/2015.
  */
+//This class is built to only contain a function that does 1 thing: logs in.
 public class Login {
 	public static void login(HttpServletRequest req, HttpServletResponse resp, Connection connection, JSONObject jsonObject) throws IOException{
 		try {
+			//Call function getProfile, which will format the SQL statement using the info from the JSON and execute it
+			//A result set is returned from this call, think of it as a 2D-Array of my result
 			ResultSet rs = getProfile(connection, jsonObject);
-			int user_id;
 			if (rs.next()) {
+				//if login is valid, sent the profile information to output.
 				resp.getWriter().print(makeProfileJSON(rs).toString());
 			}
-			else
+			else //else you entered false login information
 				resp.setStatus(Constants.UNATHORIZED);
 		}
 		catch (JSONException e) {
@@ -35,15 +38,19 @@ public class Login {
 	}
 
 	public static ResultSet getProfile(Connection connection, JSONObject jsonObject) throws SQLException, JSONException{
+		//Parse JSON
 		String email = jsonObject.getString(Constants.EMAIL);
 		String phone_num = jsonObject.getString(Constants.PHONE_NUMBER);
 		String password = jsonObject.getString(Constants.PASSWORD);
 
+		//Check for valid input
 		if (email.isEmpty() && phone_num.isEmpty())
 			throw new JSONException("");
 
+		//Set up string that's the SQL stmt to be execute. ?'s are wildcards for the PrepareStatement.
 		String select_sql;
 		PreparedStatement stmt;
+		//2 possible ways to login => 2 possible SQL statements
 		if (email.isEmpty()) {
 			select_sql = "Select * from Profile where phone_number = ? and password  = ?";
 			stmt = connection.prepareStatement(select_sql);
@@ -54,11 +61,14 @@ public class Login {
 			stmt = connection.prepareStatement(select_sql);
 			stmt.setString(1, email);
 		}
+		//PrepareStatements restrict what goes in the ?'s, preventing SQL injections (ex: I can wipe out tables.)
 		stmt.setString(2, password);
 		return stmt.executeQuery();
 	}
 
 	public static JSONObject makeProfileJSON(ResultSet rs) throws SQLException, JSONException{
+		//Users are unique, so rs will only have 1 item in it at most.
+		//If there's nothing in rs and we try to remove values from it, a SQL exception is thrown.
 		JSONObject id = new JSONObject();
 		id.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
 		id.put(Constants.NAME, rs.getString(Constants.NAME));

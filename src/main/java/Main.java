@@ -16,13 +16,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//NOTE: for example on to write a back-end function, check-out Login.java!
 public class Main extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		try {
+			//If a GET HTTP request is sent, this function is called.
 			Connection connection = getConnection(response);
 			if (connection != null) {
+				//if a connection is successfully made, parse the URI and call functions based on the parsed URI
 				String path = request.getRequestURI();
 				String[] pathPieces = path.split("/");
 				if (pathPieces[1].equals("profile") && pathPieces.length == 4)
@@ -54,6 +57,7 @@ public class Main extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		//If a POST HTTP request is sent, this function is called.
 		// Get request body into string
 		StringBuilder requestBody = new StringBuilder();
 		String line;
@@ -71,9 +75,9 @@ public class Main extends HttpServlet {
 
 		// Get connection to DB
 		Connection connection = getConnection(response);
-
 		if (connection != null) {
 			// Business logic
+			//If the connection is successfully made, parse URI and call functions based on that,
 			try {
 				JSONObject jsonObject = new JSONObject(requestBody.toString());
 				String path = request.getRequestURI();
@@ -113,6 +117,7 @@ public class Main extends HttpServlet {
 		}
 	}
 
+	//For debugging purposes.
 	public static String getStackTrace(Throwable aThrowable) {
 		final Writer result = new StringWriter();
 		final PrintWriter printWriter = new PrintWriter(result);
@@ -120,6 +125,7 @@ public class Main extends HttpServlet {
 		return result.toString();
 	}
 
+	//Function that does the connecting. This is always called on any clal to the API
 	private static Connection getConnection(HttpServletResponse response) throws IOException {
 		try {
 			URI dbUri = new URI(System.getenv("DATABASE_URL"));
@@ -135,6 +141,7 @@ public class Main extends HttpServlet {
 		}
 	}
 
+	//Main function
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(Integer.valueOf(System.getenv("PORT")));
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
