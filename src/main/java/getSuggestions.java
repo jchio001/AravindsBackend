@@ -56,12 +56,13 @@ public class getSuggestions {
 		int min_zip = zip_code - 2;
 		int max_zip = zip_code + 2;
 		String select_sql = "Select user_id, name, village, zip_code FROM Profile where village = ? and user_id != ? " +
-				"and zip_code BETWEEN ? and ? ORDER BY user_id DESC";
+				"and visible = ? and zip_code BETWEEN ? and ? ORDER BY user_id DESC";
 		stmt = connection.prepareStatement(select_sql);
 		stmt.setString(1, village);
 		stmt.setLong(2, req_id);
-		stmt.setInt(3, min_zip);
-		stmt.setInt(4, max_zip);
+		stmt.setBoolean(3, true);
+		stmt.setInt(4, min_zip);
+		stmt.setInt(5, max_zip);
 		return stmt.executeQuery();
 	}
 
