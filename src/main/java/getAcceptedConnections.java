@@ -34,7 +34,6 @@ public class getAcceptedConnections {
 				return;
 			}
 			resp.getWriter().print(makeUserJSON(connection, id_arr));
-			resp.getWriter().print("3");
 		}
 		catch (SQLException| JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
@@ -42,7 +41,7 @@ public class getAcceptedConnections {
 		}
 	}
 
-	public static ResultSet runSelectQuery(Connection connection, long id) throws SQLException{
+	public static ResultSet runSelectQuery(Connection connection, Long id) throws SQLException{
 		String select_sql = "Select * from Connections where (requester_id = ? or target_id = ?) " +
 				"and status = ?";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
@@ -69,7 +68,7 @@ public class getAcceptedConnections {
 	}
 
 	public static String makeUserJSON(Connection connection, ArrayList<Long> id_list) throws SQLException, JSONException{
-		String select_sql = "Select user_id, name from Profile where user_id = ANY (?)";
+		String select_sql = "Select user_id, name, zip_code, village from Profile where user_id = ANY (?)";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setArray(1, connection.createArrayOf("bigint", id_list.toArray()));
 		ResultSet rs  = stmt.executeQuery();
