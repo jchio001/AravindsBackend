@@ -26,7 +26,7 @@ public class changeVisibility {
 				return;
 			}
 
-			String update_sql = "UPDATE Profile SET visibility = ? where user_id = ?";
+			String update_sql = "UPDATE Profile SET visible = ? where user_id = ?";
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
 
 			if (mode.equals("true"))
