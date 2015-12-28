@@ -28,8 +28,11 @@ public class getAcceptedConnections {
 		}
 		try {
 			ResultSet rs = runSelectQuery(connection, src_id);
+			resp.getWriter().print("1");
 			ArrayList<Long> id_arr = parseIDs(rs, src_id);
+			resp.getWriter().print("2");
 			resp.getWriter().print(makeUserJSON(connection, id_arr));
+			resp.getWriter().print("3");
 		}
 		catch (SQLException| JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
