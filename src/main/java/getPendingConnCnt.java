@@ -43,7 +43,9 @@ public class getPendingConnCnt {
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setLong(1, src_id);
 		stmt.setString(2, Constants.PENDING);
-		return stmt.executeQuery();
+		ResultSet rs =  stmt.executeQuery();
+		stmt.close();
+		return rs;
 	}
 
 	public static String getCountJSON(ResultSet rs) throws SQLException, JSONException{

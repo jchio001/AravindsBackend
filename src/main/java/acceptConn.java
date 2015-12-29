@@ -24,6 +24,7 @@ public class acceptConn {
 			stmt.setLong(2, req_id);
 			stmt.setLong(3, target_id);
 			stmt.executeUpdate();
+			stmt.close();
 		}
 		catch (JSONException e) {
 			resp.setStatus(Constants.BAD_REQUEST);

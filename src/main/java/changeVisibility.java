@@ -40,6 +40,7 @@ public class changeVisibility {
 
 			stmt.setLong(2, src_id);
 			stmt.executeUpdate();
+			stmt.close();
 		}
 		catch (SQLException exception) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);

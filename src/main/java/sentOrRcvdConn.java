@@ -30,6 +30,7 @@ public class sentOrRcvdConn {
 			}
 			ResultSet rs = stmt.executeQuery();
 			resp.getWriter().print(setUpInfoJSON(rs, Long.parseLong(id)));
+			stmt.close();
 		}
 		catch (SQLException|JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);

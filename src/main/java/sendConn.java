@@ -26,6 +26,7 @@ public class sendConn {
 			stmt.setLong(2, target_id);
 			stmt.setString(3, Constants.PENDING);
 			stmt.executeUpdate();
+			stmt.close();
 		}
 		catch (JSONException e) {
 			resp.setStatus(Constants.BAD_REQUEST);

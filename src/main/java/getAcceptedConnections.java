@@ -82,6 +82,7 @@ public class getAcceptedConnections {
 			user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
 			userArr.put(user);
 		}
+		stmt.close();
 		return userArr.toString();
 	}
 }

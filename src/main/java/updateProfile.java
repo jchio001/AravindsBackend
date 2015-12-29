@@ -35,6 +35,7 @@ public class updateProfile {
 			stmt.setString(6, email);
 			stmt.setLong(7, user_id);
 			stmt.executeUpdate();
+			stmt.close();
 		}
 		catch (JSONException e) {
 			resp.setStatus(Constants.BAD_REQUEST);

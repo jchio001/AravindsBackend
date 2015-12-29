@@ -63,7 +63,9 @@ public class getSuggestions {
 		stmt.setBoolean(3, true);
 		stmt.setInt(4, min_zip);
 		stmt.setInt(5, max_zip);
-		return stmt.executeQuery();
+		ResultSet rs  = stmt.executeQuery();
+		stmt.close();
+		return rs;
 	}
 
 	public static String getJSONArr(ResultSet rs) throws JSONException, SQLException{

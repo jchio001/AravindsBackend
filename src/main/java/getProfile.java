@@ -57,6 +57,7 @@ public class getProfile {
 			return "";
 
 		ResultSet rs = stmt.executeQuery();
+		stmt.close();
 		if (rs.next()) {
 			return getStatusString(req_id, target_id, rs);
 		}
@@ -95,7 +96,9 @@ public class getProfile {
 				"Profile where user_id = ?";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setLong(1, Long.parseLong(id));
-		return stmt.executeQuery();
+		ResultSet rs = stmt.executeQuery();
+		stmt.close();
+		return rs;
 	}
 
 	public static String respondWithJSONString(ResultSet rs, String status) throws SQLException, JSONException{
