@@ -44,7 +44,6 @@ public class getPendingConnCnt {
 		stmt.setLong(1, src_id);
 		stmt.setString(2, Constants.PENDING);
 		ResultSet rs =  stmt.executeQuery();
-		stmt.close();
 		return rs;
 	}
 
