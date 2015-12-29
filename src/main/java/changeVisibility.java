@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * Created by jman0_000 on 12/28/2015.
  */
 public class changeVisibility {
-	public static void changeVisible(HttpServletRequest req, HttpServletResponse resp, Connection connection, String mode, String id)
+	public static void changeVisibility(HttpServletRequest req, HttpServletResponse resp, Connection connection, String mode, String id)
 	throws IOException {
 		try {
 			long src_id;

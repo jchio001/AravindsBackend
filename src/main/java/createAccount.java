@@ -21,10 +21,8 @@ public class createAccount {
 			String email = jsonObject.getString(Constants.EMAIL);
 			String password = jsonObject.getString(Constants.PASSWORD);
 
-			if (userExists(connection, email, phone_number)) {
-				resp.setStatus(Constants.BAD_REQUEST);
+			if (doesUserExist(connection, resp, phone_number, email))
 				return;
-			}
 
 			String insert_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
@@ -49,14 +47,37 @@ public class createAccount {
 		}
 	}
 
-	public static boolean userExists(Connection connection, String email, String phone_number)
-	throws SQLException{
-		String select_sql = "Select * from Profile where email = ? or phone_number = ?";
-		PreparedStatement stmt = connection.prepareStatement(select_sql);
-		stmt.setString(1, email);
-		stmt.setString(2, phone_number);
+	public static boolean doesUserExist(Connection connection, HttpServletResponse resp, String phone_number, String email)
+			throws SQLException {
+		String select_sql;
+		PreparedStatement stmt;
+		if (phone_number.isEmpty() && !email.isEmpty()) {
+			select_sql = "Select * from Profile where email = ?";
+			stmt = connection.prepareStatement(select_sql);
+			stmt.setString(1, email);
+		}
+		else if (!phone_number.isEmpty() && email.isEmpty()) {
+			select_sql = "Select * from Profile where phone_number = ?";
+			stmt = connection.prepareStatement(select_sql);
+			stmt.setString(1, phone_number);
+		}
+		else if (!email.isEmpty() && !phone_number.isEmpty()) {
+			select_sql = "Select * from Profile where phone_number = ? or email = ?";
+			stmt = connection.prepareStatement(select_sql);
+			stmt.setString(1, phone_number);
+			stmt.setString(1, email);
+		}
+		else {
+			resp.setStatus(Constants.BAD_REQUEST);
+			return true;
+		}
 		ResultSet rs = stmt.executeQuery();
-		return rs.next();
+		if (rs.next()) {
+			resp.setStatus(Constants.BAD_REQUEST);
+			return true;
+		}
+		else
+			return false;
 	}
 
 	public static void returnID(PreparedStatement stmt, HttpServletResponse resp) throws SQLException, JSONException, IOException{
@@ -81,8 +102,5 @@ public class createAccount {
 		resp.getWriter().print(scoreReport.toString());
 	}
 
-	/**
-	 * Created by jman0_000 on 12/25/2015.
-	 */
 }
 
