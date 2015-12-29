@@ -57,10 +57,10 @@ public class getProfile {
 			return "";
 
 		ResultSet rs = stmt.executeQuery();
-		stmt.close();
 		if (rs.next()) {
 			return getStatusString(req_id, target_id, rs);
 		}
+		stmt.close();
 		return Constants.REL_UNCONNECTED;
 	}
 

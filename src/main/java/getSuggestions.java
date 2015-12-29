@@ -64,7 +64,6 @@ public class getSuggestions {
 		stmt.setInt(4, min_zip);
 		stmt.setInt(5, max_zip);
 		ResultSet rs  = stmt.executeQuery();
-		stmt.close();
 		return rs;
 	}
 

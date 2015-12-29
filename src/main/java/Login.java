@@ -64,7 +64,6 @@ public class Login {
 		//PrepareStatements restrict what goes in the ?'s, preventing SQL injections (ex: I can wipe out tables.)
 		stmt.setString(2, password);
 		ResultSet rs = stmt.executeQuery();
-		stmt.close();
 		return rs;
 	}
 
