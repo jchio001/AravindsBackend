@@ -65,7 +65,7 @@ public class createAccount {
 			select_sql = "Select * from Profile where phone_number = ? or email = ?";
 			stmt = connection.prepareStatement(select_sql);
 			stmt.setString(1, phone_number);
-			stmt.setString(1, email);
+			stmt.setString(2, email);
 		}
 		else {
 			resp.setStatus(Constants.BAD_REQUEST);
