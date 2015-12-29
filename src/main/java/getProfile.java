@@ -97,7 +97,6 @@ public class getProfile {
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setLong(1, Long.parseLong(id));
 		ResultSet rs = stmt.executeQuery();
-		stmt.close();
 		return rs;
 	}
 
