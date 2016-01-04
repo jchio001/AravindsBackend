@@ -68,7 +68,7 @@ public class getAcceptedConnections {
 	}
 
 	public static String makeUserJSON(Connection connection, ArrayList<Long> id_list) throws SQLException, JSONException{
-		String select_sql = "Select user_id, name, zip_code, village from Profile where user_id = ANY (?)";
+		String select_sql = "Select user_id, name, src_zip, dest_zip, gender from Profile where user_id = ANY (?)";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setArray(1, connection.createArrayOf("bigint", id_list.toArray()));
 		ResultSet rs  = stmt.executeQuery();
@@ -78,8 +78,9 @@ public class getAcceptedConnections {
 			user = new JSONObject();
 			user.put(Constants.USER_ID, rs.getLong(Constants.USER_ID));
 			user.put(Constants.NAME, rs.getString(Constants.NAME));
+			user.put(Constants.SRC_ZIP, rs.getString(Constants.SRC_ZIP));
 			user.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
-			user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+			user.put(Constants.GENDER, rs.getString(Constants.GENDER));
 			userArr.put(user);
 		}
 		stmt.close();
