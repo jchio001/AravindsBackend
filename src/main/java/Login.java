@@ -74,9 +74,10 @@ public class Login {
 		id.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
 		id.put(Constants.NAME, rs.getString(Constants.NAME));
 		id.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
-		id.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+		id.put(Constants.SRC_ZIP, rs.getInt(Constants.SRC_ZIP));
 		id.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 		id.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
+		id.put(Constants.GENDER, rs.getString(Constants.GENDER));
 		id.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
 		return id;
 	}

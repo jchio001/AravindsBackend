@@ -92,7 +92,7 @@ public class getProfile {
 	}
 
 	public static ResultSet getProfileRS(Connection connection, String id) throws SQLException{
-		String select_sql = "Select name, about_me, village, zip_code, phone_number, email from " +
+		String select_sql = "Select name, about_me, src_zip, dest_zip, phone_number, email from " +
 				"Profile where user_id = ?";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setLong(1, Long.parseLong(id));
@@ -104,10 +104,11 @@ public class getProfile {
 		JSONObject profile = new JSONObject();
 		profile.put(Constants.NAME, rs.getString(Constants.NAME));
 		profile.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
-		profile.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+		profile.put(Constants.SRC_ZIP, rs.getInt(Constants.SRC_ZIP));
 		profile.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 		profile.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
 		profile.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
+		profile.put(Constants.GENDER, rs.getString(Constants.GENDER));
 		profile.put(Constants.STATUS, status);
 		return profile.toString();
 	}

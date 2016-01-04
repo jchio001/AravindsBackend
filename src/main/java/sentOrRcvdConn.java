@@ -56,7 +56,7 @@ public class sentOrRcvdConn {
 			userJSON = new JSONObject();
 			userJSON.put(Constants.USER_ID, rs.getLong(Constants.USER_ID));
 			userJSON.put(Constants.NAME, rs.getString(Constants.NAME));
-			userJSON.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
+			userJSON.put(Constants.SRC_ZIP, rs.getString(Constants.SRC_ZIP));
 			userJSON.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 			userJSON.put(Constants.STATUS, rs.getString(Constants.STATUS));
 			resultArr.put(userJSON);
