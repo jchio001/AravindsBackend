@@ -23,10 +23,11 @@ public class Constants {
     public static final String ABOUT_ME = "about_me";
     public static final String ID = "id";
     public static final String USER_ID = "user_id";
-    public static final String VILLAGE = "village";
-    public static final String ZIP_CODE = "zip_code";
+    public static final String SRC_ZIP = "src_zip";
+    public static final String DEST_ZIP = "dest_zip";
     public static final String PHONE_NUMBER = "phone_number";
     public static final String EMAIL = "email";
+    public static final String GENDER = "gender";
     public static final String PASSWORD = "password";
 
     //CONN KEYS

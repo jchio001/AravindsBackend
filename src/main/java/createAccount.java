@@ -15,25 +15,27 @@ public class createAccount {
 		try {
 			String name = jsonObject.getString(Constants.NAME);
 			String about_me = jsonObject.getString(Constants.ABOUT_ME);
-			String village = jsonObject.getString(Constants.VILLAGE);
-			int zip_code = jsonObject.getInt(Constants.ZIP_CODE);
+			int src_zip = jsonObject.getInt(Constants.SRC_ZIP);
+			int dest_zip = jsonObject.getInt(Constants.DEST_ZIP);
 			String phone_number = jsonObject.getString(Constants.PHONE_NUMBER);
 			String email = jsonObject.getString(Constants.EMAIL);
+			String gender = jsonObject.getString(Constants.GENDER);
 			String password = jsonObject.getString(Constants.PASSWORD);
 
 			if (doesUserExist(connection, resp, phone_number, email))
 				return;
 
-			String insert_sql = "INSERT INTO profile (name, about_me, village, zip_code, phone_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String insert_sql = "INSERT INTO profile (name, about_me, src_zip, dest_zip, phone_number, email, gender, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, name);
 			stmt.setString(2, about_me);
-			stmt.setString(3, village);
-			stmt.setInt(4, zip_code);
+			stmt.setInt(3, src_zip);
+			stmt.setInt(4, dest_zip);
 			stmt.setString(5, phone_number);
 			stmt.setString(6, email);
-			stmt.setString(7, password);
+			stmt.setString(7, gender);
+			stmt.setString(8, password);
 
 			returnID(stmt, resp);
 		}

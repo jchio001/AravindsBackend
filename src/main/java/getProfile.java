@@ -105,7 +105,7 @@ public class getProfile {
 		profile.put(Constants.NAME, rs.getString(Constants.NAME));
 		profile.put(Constants.ABOUT_ME, rs.getString(Constants.ABOUT_ME));
 		profile.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
-		profile.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+		profile.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 		profile.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
 		profile.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
 		profile.put(Constants.STATUS, status);

@@ -1,5 +1,4 @@
 import Misc.Constants;
-import jdk.nashorn.api.scripting.JSObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by jman0_000 on 12/25/2015.
@@ -59,7 +57,7 @@ public class sentOrRcvdConn {
 			userJSON.put(Constants.USER_ID, rs.getLong(Constants.USER_ID));
 			userJSON.put(Constants.NAME, rs.getString(Constants.NAME));
 			userJSON.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
-			userJSON.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+			userJSON.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 			userJSON.put(Constants.STATUS, rs.getString(Constants.STATUS));
 			resultArr.put(userJSON);
 		}

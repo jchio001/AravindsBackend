@@ -35,7 +35,7 @@ public class getSuggestions {
 
 			if (rs.next()) {
 				village = rs.getString(Constants.VILLAGE);
-				zip_code = rs.getInt(Constants.ZIP_CODE);
+				zip_code = rs.getInt(Constants.DEST_ZIP);
 			}
 			else {
 				resp.setStatus(Constants.BAD_REQUEST);
@@ -75,7 +75,7 @@ public class getSuggestions {
 			user.put(Constants.USER_ID, rs.getInt(Constants.USER_ID));
 			user.put(Constants.NAME, rs.getString(Constants.NAME));
 			user.put(Constants.VILLAGE, rs.getString(Constants.VILLAGE));
-			user.put(Constants.ZIP_CODE, rs.getInt(Constants.ZIP_CODE));
+			user.put(Constants.DEST_ZIP, rs.getInt(Constants.DEST_ZIP));
 			suggestionArr.put(user);
 		}
 		return suggestionArr.toString();

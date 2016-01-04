@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Created by jman0_000 on 12/25/2015.
@@ -21,7 +20,7 @@ public class updateProfile {
 			String name = jsonObject.getString(Constants.NAME);
 			String about_me = jsonObject.getString(Constants.ABOUT_ME);
 			String village = jsonObject.getString(Constants.VILLAGE);
-			int zip_code = jsonObject.getInt(Constants.ZIP_CODE);
+			int zip_code = jsonObject.getInt(Constants.DEST_ZIP);
 			String phone_number = jsonObject.getString(Constants.PHONE_NUMBER);
 			String email = jsonObject.getString(Constants.EMAIL);
 
