@@ -26,7 +26,7 @@ public class updateProfile {
 			String gender = jsonObject.getString(Constants.GENDER);
 
 			String update_sql = "UPDATE Profile SET name = ?, about_me = ?, src_zip = ?, dest_zip = ?, phone_number = ?, " +
-					"email = ?, gender = ?, where user_id = ?";
+					"email = ?, gender = ? where user_id = ?";
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
 			stmt.setString(1, name);
 			stmt.setString(2, about_me);
