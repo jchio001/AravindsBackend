@@ -57,7 +57,7 @@ public class getSuggestions {
 		int max_src = src_zip + 2;
 		int min_dest = dest_zip - 2;
 		int max_dest = dest_zip + 2;
-		String select_sql = "Select user_id, name, src_zip, zip_code, gender FROM Profile where src_zip BETWEEN ? and ? and user_id != ? " +
+		String select_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and user_id != ? " +
 				"and visible = ? and zip_code BETWEEN ? and ? ORDER BY user_id DESC";
 		stmt = connection.prepareStatement(select_sql);
 		stmt.setInt(1, min_src);
