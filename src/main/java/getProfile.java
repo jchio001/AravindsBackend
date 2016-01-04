@@ -92,7 +92,7 @@ public class getProfile {
 	}
 
 	public static ResultSet getProfileRS(Connection connection, String id) throws SQLException{
-		String select_sql = "Select name, about_me, src_zip, dest_zip, phone_number, email from " +
+		String select_sql = "Select name, about_me, src_zip, dest_zip, phone_number, email, gender from " +
 				"Profile where user_id = ?";
 		PreparedStatement stmt = connection.prepareStatement(select_sql);
 		stmt.setLong(1, Long.parseLong(id));
