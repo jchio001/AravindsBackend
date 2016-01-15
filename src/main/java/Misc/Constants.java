@@ -29,6 +29,7 @@ public class Constants {
     public static final String EMAIL = "email";
     public static final String GENDER = "gender";
     public static final String PASSWORD = "password";
+    public static final String VISIBLE = "visible";
 
     //CONN KEYS
     public static final String REQ_ID = "requester_id";
