@@ -1,7 +1,5 @@
 import Misc.Constants;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +13,7 @@ import java.sql.SQLException;
  * Created by jman0_000 on 1/16/2016.
  */
 public class Search {
-	public static void search(HttpServletRequest req, HttpServletResponse resp, Connection connection, String requester,
+	public static void Search(HttpServletRequest req, HttpServletResponse resp, Connection connection, String requester,
 							  String gender, String src, String dest) throws IOException {
 		try {
 			long req_id;
@@ -36,14 +34,14 @@ public class Search {
 			ResultSet rs = getResultSet(connection, stmt, src_zip, dest_zip, req_id, gender);
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
 		}
-		catch (SQLException|JSONException e) {
+		catch (SQLException |JSONException e) {
 			resp.setStatus(Constants.INTERNAL_SERVER_ERROR);
 			resp.getWriter().print(e.getMessage());
 		}
 	}
 
 	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int src_zip, int dest_zip, long req_id, String gender)
-	throws SQLException{
+			throws SQLException{
 		stmt.setInt(1, src_zip - 1);
 		stmt.setInt(2, src_zip + 1);
 		stmt.setInt(3, dest_zip - 1);
