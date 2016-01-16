@@ -44,8 +44,8 @@ public class Main extends HttpServlet {
 					else
 						response.setStatus(Constants.NOT_FOUND);
 				}
-				//else if (pathPieces[1].equals("search") && pathPieces.length == 6)
-					//Search.Search(request, response, connection, pathPieces[2], pathPieces[3], pathPieces[4], pathPieces[5]);
+				else if (pathPieces[1].equals("search") && pathPieces.length == 6)
+					search.doSearch(request, response, connection, pathPieces[2], pathPieces[3], pathPieces[4], pathPieces[5]);
 				else
 					response.setStatus(Constants.NOT_FOUND);
 
