@@ -27,9 +27,17 @@ public class search {
 				resp.getWriter().print(e.getMessage());
 				return;
 			}
-			String update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
-					"dest_zip BETWEEN ? and ? and user_id != ? " +
-					"and visible = ? and gender = ? ORDER BY user_id DESC";
+			String update_sql;
+			if (gender.equals(Constants.NO_GENDER_PREF)) {
+				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
+						"dest_zip BETWEEN ? and ? and user_id != ? " +
+						"and visible = ? ORDER BY user_id DESC";
+			}
+			else {
+				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
+						"dest_zip BETWEEN ? and ? and user_id != ? " +
+						"and visible = ? and gender = ? ORDER BY user_id DESC";
+			}
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
 			ResultSet rs = getResultSet(connection, stmt, src_zip, dest_zip, req_id, gender);
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
@@ -48,7 +56,8 @@ public class search {
 		stmt.setInt(4, dest_zip + 1);
 		stmt.setLong(5, req_id);
 		stmt.setBoolean(6, true);
-		stmt.setString(7, gender);
+		if (!gender.equals(Constants.NO_GENDER_PREF))
+			stmt.setString(7, gender);
 		return stmt.executeQuery();
 	}
 }

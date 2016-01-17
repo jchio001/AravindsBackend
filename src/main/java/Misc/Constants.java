@@ -8,6 +8,7 @@ public class Constants {
     //zip_code (int, 8 digits)
     //phone_number (16 characters)
     //email (32 characters)
+    //gender
 
     public static final int BAD_REQUEST = 400;
     public static final int UNATHORIZED = 401;
@@ -51,5 +52,7 @@ public class Constants {
     public static final String REL_ACCEPTED = "Accepted";
     public static final String REL_REJECTED = "Rejected";
     public static final String REL_REJECTED_BY_YOU = "Rejected by you";
+
+    public static final String NO_GENDER_PREF = "nopref";
 
 }
