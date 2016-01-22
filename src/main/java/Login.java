@@ -79,7 +79,7 @@ public class Login {
 		id.put(Constants.PHONE_NUMBER, rs.getString(Constants.PHONE_NUMBER));
 		id.put(Constants.GENDER, rs.getString(Constants.GENDER));
 		id.put(Constants.EMAIL, rs.getString(Constants.EMAIL));
-		id.put(Constants.VISIBLE, rs.getString(Constants.VISIBLE));
+		id.put(Constants.VISIBLE, rs.getBoolean(Constants.VISIBLE));
 		return id;
 	}
 
