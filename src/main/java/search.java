@@ -14,13 +14,14 @@ import java.sql.SQLException;
  */
 public class search {
 	public static void doSearch(HttpServletRequest req, HttpServletResponse resp, Connection connection, String requester,
-							  String gender, String src, String dest) throws IOException {
+							  String gender, String range, String src, String dest) throws IOException {
 
 		try {
 			long req_id;
-			int src_zip, dest_zip;
+			int zip_range, src_zip, dest_zip;
 			try {
 				req_id = Long.parseLong(requester);
+				zip_range = Integer.parseInt(range);
 				src_zip = Integer.parseInt(src);
 				dest_zip = Integer.parseInt(dest);
 			} catch (NumberFormatException e) {
@@ -40,7 +41,7 @@ public class search {
 						"and visible = ? and gender = ? ORDER BY user_id DESC";
 			}
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
-			ResultSet rs = getResultSet(connection, stmt, src_zip, dest_zip, req_id, gender);
+			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, gender);
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
 		}
 		catch (SQLException |JSONException e) {
@@ -49,12 +50,12 @@ public class search {
 		}
 	}
 
-	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int src_zip, int dest_zip, long req_id, String gender)
+	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int zip_range, int src_zip, int dest_zip, long req_id, String gender)
 			throws SQLException {
-		stmt.setInt(1, src_zip - 1);
-		stmt.setInt(2, src_zip + 1);
-		stmt.setInt(3, dest_zip - 1);
-		stmt.setInt(4, dest_zip + 1);
+		stmt.setInt(1, src_zip - zip_range);
+		stmt.setInt(2, src_zip + zip_range);
+		stmt.setInt(3, dest_zip - zip_range);
+		stmt.setInt(4, dest_zip + zip_range);
 		stmt.setLong(5, req_id);
 		stmt.setBoolean(6, true);
 		if (!gender.equals(Constants.NO_GENDER_PREF))
