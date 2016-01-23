@@ -58,10 +58,10 @@ public class search {
 
 	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int zip_range, int src_zip, int dest_zip, long req_id, String gender)
 			throws SQLException {
-		stmt.setInt(1, src_zip - zip_range);
-		stmt.setInt(2, src_zip + zip_range);
-		stmt.setInt(3, dest_zip - zip_range);
-		stmt.setInt(4, dest_zip + zip_range);
+		stmt.setInt(1, src_zip - 1);
+		stmt.setInt(2, src_zip + 1);
+		stmt.setInt(3, dest_zip - 1);
+		stmt.setInt(4, dest_zip + 1);
 		stmt.setLong(5, req_id);
 		stmt.setBoolean(6, true);
 		if (!gender.equals(Constants.NO_GENDER_PREF))
