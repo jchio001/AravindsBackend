@@ -43,7 +43,7 @@ public class search {
 						"and visible = ? and gender = ? ORDER BY user_id DESC";
 			}
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
-			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, gender);
+			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, WordUtils.capitalize(gender));
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
 		}
 		catch (SQLException |JSONException e) {
@@ -52,8 +52,8 @@ public class search {
 		}
 	}
 
-	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int zip_range, int src_zip, int dest_zip, long req_id, String gender)
-			throws SQLException {
+	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int zip_range, int src_zip, int dest_zip,
+										 long req_id, String gender) throws SQLException {
 		stmt.setInt(1, src_zip - zip_range);
 		stmt.setInt(2, src_zip + zip_range);
 		stmt.setInt(3, dest_zip - zip_range);
@@ -61,7 +61,7 @@ public class search {
 		stmt.setLong(5, req_id);
 		stmt.setBoolean(6, true);
 		if (!gender.equals(Constants.NO_GENDER_PREF))
-			stmt.setString(7, WordUtils.capitalize(gender));
+			stmt.setString(7, gender);
 		return stmt.executeQuery();
 	}
 }
