@@ -30,6 +30,11 @@ public class search {
 				resp.getWriter().print(e.getMessage());
 				return;
 			}
+			resp.getWriter().print(requester + "\n");
+			resp.getWriter().print(gender + "\n");
+			resp.getWriter().print(range + "\n");
+			resp.getWriter().print(src + "\n");
+			resp.getWriter().print(dest + "\n");
 			String update_sql;
 			if (gender.equals(Constants.NO_GENDER_PREF)) {
 				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
