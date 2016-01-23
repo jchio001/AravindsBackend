@@ -30,6 +30,7 @@ public class search {
 				resp.getWriter().print(e.getMessage());
 				return;
 			}
+			resp.getWriter().print(WordUtils.capitalize(gender));
 			String update_sql;
 			if (gender.equals(Constants.NO_GENDER_PREF)) {
 				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
