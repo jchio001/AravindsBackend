@@ -15,26 +15,18 @@ import java.sql.SQLException;
 public class search {
 	public static void doSearch(HttpServletRequest req, HttpServletResponse resp, Connection connection, String requester,
 							  String gender, String range, String src, String dest) throws IOException {
-		//req/gender/range/src/dest
 		try {
 			long req_id;
-			int zip_range, src_zip, dest_zip;
+			int src_zip, dest_zip;
 			try {
 				req_id = Long.parseLong(requester);
 				src_zip = Integer.parseInt(src);
 				dest_zip = Integer.parseInt(dest);
-				zip_range = Integer.parseInt(range);
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				resp.setStatus(Constants.BAD_REQUEST);
 				resp.getWriter().print(e.getMessage());
 				return;
 			}
-			resp.getWriter().print(requester + "\n");
-			resp.getWriter().print(gender + "\n");
-			resp.getWriter().print(range + "\n");
-			resp.getWriter().print(src + "\n");
-			resp.getWriter().print(dest + "\n");
 			String update_sql;
 			if (gender.equals(Constants.NO_GENDER_PREF)) {
 				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
@@ -47,7 +39,7 @@ public class search {
 						"and visible = ? and gender = ? ORDER BY user_id DESC";
 			}
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
-			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, gender);
+			ResultSet rs = getResultSet(connection, stmt, src_zip, dest_zip, req_id, gender);
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
 		}
 		catch (SQLException |JSONException e) {
@@ -56,7 +48,7 @@ public class search {
 		}
 	}
 
-	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int zip_range, int src_zip, int dest_zip, long req_id, String gender)
+	public static ResultSet getResultSet(Connection connection, PreparedStatement stmt, int src_zip, int dest_zip, long req_id, String gender)
 			throws SQLException {
 		stmt.setInt(1, src_zip - 1);
 		stmt.setInt(2, src_zip + 1);
