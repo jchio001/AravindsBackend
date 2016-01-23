@@ -14,7 +14,8 @@ import java.sql.SQLException;
  */
 public class search {
 	public static void doSearch(HttpServletRequest req, HttpServletResponse resp, Connection connection, String requester,
-							  String gender, String range, String src, String dest) throws IOException {
+							  String gender, String src, String dest) throws IOException {
+
 		try {
 			long req_id;
 			int src_zip, dest_zip;
