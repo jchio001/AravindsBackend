@@ -43,7 +43,7 @@ public class search {
 						"and visible = ? and gender = ? ORDER BY user_id DESC";
 			}
 			PreparedStatement stmt = connection.prepareStatement(update_sql);
-			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, WordUtils.capitalize(gender));
+			ResultSet rs = getResultSet(connection, stmt, zip_range, src_zip, dest_zip, req_id, gender);
 			resp.getWriter().print(getSuggestions.getJSONArr(rs));
 		}
 		catch (SQLException |JSONException e) {
