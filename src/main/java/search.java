@@ -3,6 +3,7 @@ import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.text.WordUtils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,7 +60,7 @@ public class search {
 		stmt.setLong(5, req_id);
 		stmt.setBoolean(6, true);
 		if (!gender.equals(Constants.NO_GENDER_PREF))
-			stmt.setString(7, gender);
+			stmt.setString(7, WordUtils.capitalize(gender));
 		return stmt.executeQuery();
 	}
 }
