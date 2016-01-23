@@ -1,9 +1,9 @@
 import Misc.Constants;
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.text.WordUtils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,8 +30,6 @@ public class search {
 				resp.getWriter().print(e.getMessage());
 				return;
 			}
-			WordUtils.capitalize(gender);
-			resp.getWriter().print(gender);
 			String update_sql;
 			if (gender.equals(Constants.NO_GENDER_PREF)) {
 				update_sql = "Select user_id, name, src_zip, dest_zip, gender FROM Profile where src_zip BETWEEN ? and ? and " +
